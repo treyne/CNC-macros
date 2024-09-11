@@ -69,7 +69,7 @@ M30
 ;
 ;
 ;
-N2;2Pi 0 Degrees
+N4;2Pi 0 Degrees
 E#6
 G1 G41 H#6 X-#1 Y0. A#8
 G3 X#1 Y0. I#1 J0. A#8 (R-HOLE)
