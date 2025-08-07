@@ -1,0 +1,40 @@
+//
+//ACCUTEX WEDM CUTTING CONDITIONS --BEGIN--
+//-- IP OV ON OF AN AF SV WT WF WA     F    SG  FT  FR
+E001=10 20 15 10 08 11 50 12 08 08  20.0 12.00 G95 100;CUT1
+//-- IP OV ON OF AN AF SV WT WF WA     F    SG  FT  FR
+//OFFSET
+H1=0.1960
+//AUTO TAPER
+M26Q0.0050
+//ACCUTEX WEDM CUTTING CONDITIONS ---END---
+//
+G90 G21
+G92 X0. Y0.
+;(INSERT WIRE)
+M20
+#1=55.    ;DLINA REZA
+#4=4.0    ;KOJLU4ECTBO IIPOXODOB
+#6=1.0    ;C4ET4UK
+#9=-0.4   ;REZ
+#10=0
+;
+;
+N100
+E1
+G1 G40 X#1 Y#10 A0
+#10=#10+#9
+G1 Y#10
+M01
+G1 X0
+M01
+#10=#10+#9
+Y#10
+X#1
+;
+;
+#6=#6+1        ; Increment pass counter
+IF [#6<=#4] GOTO 100 ; Continue until the specified number of passes is reached
+M58
+M2
+M30
