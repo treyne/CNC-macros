@@ -1,0 +1,38 @@
+//
+//ACCUTEX WEDM CUTTING CONDITIONS --BEGIN--
+//-- IP OV ON OF AN AF SV WT WF WA     F    SG  FT  FR
+E001=10 11 10 10 05 15 45 12 04 08  10.0 09.00 G95 100;CUT1
+E002=09 18 03 07 03 07 68 14 05 01  16.0 19.00 G95 100;CUT2
+//-- IP OV ON OF AN AF SV WT WF WA     F    SG  FT  FR
+//OFFSET
+H1=0.1970  H2=0.1330
+//AUTO TAPER
+M26Q0.0000
+//ACCUTEX WEDM CUTTING CONDITIONS ---END---
+//
+G90 G21
+G92 X0. Y0.
+;(INSERT WIRE)
+M20
+#1=13.0/2.0   ;(R-HOLE) Radius of the hole
+#4=2.0    ;(Count CUT) Number of passes
+#6=1.0    ;(Counter) Pass counter
+#9=45.   ;(Entrance Angle) Entrance angle (modifiable)
+#8=0.0
+; SUBROUTINE FOR EXECUTING PASS AT THE SPECIFIED ANGLE
+#10=[#1 * COS[#9]] ; X-OFFSET BASED ON ENTRANCE ANGLE
+#11=[#1 * SIN[#9]] ; Y-OFFSET BASED ON ENTRANCE ANGLE
+;
+;
+N100
+E#6
+G1 G41 H#6 X#10 Y#11 A#8
+G3 X-#10 Y-#11 I-#10 J-#11 A#8 (R-HOLE)
+G3 X#10 Y#11 I#10 J#11 A#8 (R-HOLE)
+M01
+G1 G40 X0. Y0. A0.
+#6=#6+1        ; Increment pass counter
+IF [#6<=#4] GOTO 100 ; Continue until the specified number of passes is reached
+M58
+M2
+M30
