@@ -1,0 +1,57 @@
+//
+//ACCUTEX WEDM CUTTING CONDITIONS --BEGIN--
+//-- IP OV ON OF AN AF SV WT WF WA     F    SG  FT  FR
+E001=10 17 16 09 08 10 50 12 05 08  10.0  4.70 G95 100;CUT1
+E011=10 17 16 09 08 10 65 12 05 08  10.0  4.70 G95 100;CUT1
+E002=09 23 04 07 04 07 68 14 10 01  16.0 14.20 G95 100;CUT2
+//-- IP OV ON OF AN AF SV WT WF WA     F    SG  FT  FR
+//OFFSET
+H1=0.2160  H2=0.1400
+//AUTO TAPER
+M26Q0.0020
+//ACCUTEX WEDM CUTTING CONDITIONS ---END---
+//
+;KeyWay universal program
+#10=12.5 ;Groove width
+#20=45.0 ;Hole diameter
+#30=49.0 ;Distance from the bottom of the hole
+#24=4.0     ;Overrun
+#13=1.5		;cutting length after exiting the corner
+;shut up and calculate!
+#25=#20/2.0 ;Radius
+#32=#30-#25 ;End point
+#21=#25-#24 ;Overrun point (Y coord)
+#15=#10/2.0 ;X coord
+#17=#21+1.0 ;G41/G42 start Y coord
+;Next comes masturbation. 
+;In an attempt to keep the wire intact when exiting the corner :/
+#11=#15-#13	;soft cut X coord
+#14=#32-#13	;soft cut Y coord
+;
+G90 G21
+G92 X0. Y0.
+G0 X0. Y#17
+E1
+G1 G42 H1 X0. Y#21 A0
+G1 X-#15 Y#21 A0
+G1 X-#15 Y#32 A0
+E11
+G1 X-#11 Y#32 A0
+E1
+G1 X#15 Y#32 A0
+E11
+G1 X#15 Y#14 A0
+E1
+G1 X#15 Y#21 A0
+G1 X0. Y#21 A0
+G1 G40 X0. Y#17
+;
+E2
+G1 G42 H2 X0. Y#21 A0
+G1 X-#15 Y#21 A0
+G1 X-#15 Y#32 A0
+G1 X#15 Y#32 A0
+G1 X#15 Y#21 A0
+G1 X0. Y#21 A0
+G1 G40 X0. Y#17
+M2
